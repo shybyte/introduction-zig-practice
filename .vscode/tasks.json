@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run Zig Program",
+            "label": "Run Chapter 1",
             "type": "shell",
             "command": "zig",
             "args": [
@@ -17,6 +17,24 @@
             "detail": "Runs the Zig program defined in main.zig",
             "options": {
                 "cwd": "${workspaceFolder}/01_hello_world"
+            }
+        },
+        {
+            "label": "Run Chapter 2",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/02_basics"
             }
         }
     ]
