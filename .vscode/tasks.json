@@ -90,6 +90,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/05_debugging"
             }
+        },
+        {
+            "label": "Run Chapter 6 Pointers and Optionals",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/06_pointers_optionals"
+            }
         }
     ]
 }
