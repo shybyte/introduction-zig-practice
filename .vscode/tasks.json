@@ -36,6 +36,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/02_basics"
             }
+        },
+        {
+            "label": "Run Chapter 3",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/03_memory"
+            }
         }
     ]
 }
