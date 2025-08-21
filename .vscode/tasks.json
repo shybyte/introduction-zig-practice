@@ -72,6 +72,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/04_project_1_base64"
             }
+        },
+        {
+            "label": "Run Chapter 5 Debugging",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/05_debugging"
+            }
         }
     ]
 }
