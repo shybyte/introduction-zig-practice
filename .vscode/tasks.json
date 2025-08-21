@@ -126,6 +126,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/07_project_2_http_server"
             }
+        },
+        {
+            "label": "Run Chapter 8 Unit tests",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "test"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/08_unit_tests"
+            }
         }
     ]
 }
