@@ -144,6 +144,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/08_unit_tests"
             }
+        },
+        {
+            "label": "Run Chapter 9 Build system",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/09_build_system"
+            }
         }
     ]
 }
