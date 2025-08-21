@@ -108,6 +108,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/06_pointers_optionals"
             }
+        },
+        {
+            "label": "Run Chapter 7 HTTP server",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/07_project_2_http_server"
+            }
         }
     ]
 }
