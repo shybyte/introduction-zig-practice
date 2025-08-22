@@ -198,6 +198,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/11_data_structures"
             }
+        },
+        {
+            "label": "Run Chapter 12 Project 3 Stack",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/12_project_3_stack"
+            }
         }
     ]
 }
