@@ -162,6 +162,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/09_build_system"
             }
+        },
+        {
+            "label": "Run Chapter 10 Errors and unions",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/10_errors_and_unions"
+            }
         }
     ]
 }
