@@ -180,6 +180,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/10_errors_and_unions"
             }
+        },
+        {
+            "label": "Run Chapter 11 Data structures",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/11_data_structures"
+            }
         }
     ]
 }
