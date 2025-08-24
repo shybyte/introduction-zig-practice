@@ -216,6 +216,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/12_project_3_stack"
             }
+        },
+        {
+            "label": "Run Chapter 13 IO",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/13_io"
+            }
         }
     ]
 }
