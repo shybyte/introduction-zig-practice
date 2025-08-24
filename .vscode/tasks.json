@@ -234,6 +234,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/13_io"
             }
+        },
+        {
+            "label": "Run Chapter 14 Zig interoperability with C",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/14_c"
+            }
         }
     ]
 }
