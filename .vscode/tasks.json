@@ -288,6 +288,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/16_threads"
             }
+        },
+        {
+            "label": "Run Chapter 17 Vectors and SIMD",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/17_vectors_simd"
+            }
         }
     ]
 }
