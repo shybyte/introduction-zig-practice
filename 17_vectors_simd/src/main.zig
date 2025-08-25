@@ -1,5 +1,4 @@
 const std = @import("std");
-const stdout = std.io.getStdOut().writer();
 
 pub fn main() !void {
     std.log.debug("Chapter 17 Vectors and SIMD", .{});
@@ -12,7 +11,7 @@ pub fn main() !void {
         const v2 = @Vector(4, u32){ 10, 22, 5, 12 };
         const v1 = @Vector(4, u32){ 4, 12, 37, 9 };
         const v3 = v1 + v2;
-        try stdout.print("{any}\n", .{v3});
+        std.log.debug("{any}\n", .{v3});
     }
 
     // 17.2.1 Transforming arrays into vectors
@@ -27,6 +26,6 @@ pub fn main() !void {
     // 17.2.2 The @splat() function
     {
         const v1: @Vector(10, u32) = @splat(16);
-        try stdout.print("{any}\n", .{v1});
+        std.log.debug("{any}\n", .{v1});
     }
 }

@@ -3,14 +3,8 @@
 //! is to delete this file and start with root.zig instead.
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("Run `zig build test` to run the tests\n", .{});
+    std.log.debug("Run `zig build test` to run the tests\n", .{});
 
     // 3.1.4 Stack
     {
@@ -34,7 +28,7 @@ pub fn main() !void {
         const name = "Pedro";
         const output = try std.fmt.allocPrint(allocator, "Hello {s}!!!", .{name});
         defer allocator.free(output);
-        try stdout.print("{s}\n", .{output});
+        std.log.debug("{s}\n", .{output});
     }
 
     // 3.3.7 Arena allocator
@@ -64,7 +58,7 @@ pub fn main() !void {
 
     // 3.3.8 The alloc() and free() methods
     {
-        const stdin = std.io.getStdIn();
+        const stdin = std.fs.File.stdin();
         var gpa = std.heap.GeneralPurposeAllocator(.{}){};
         const allocator = gpa.allocator();
         var input = try allocator.alloc(u8, 50);
@@ -73,7 +67,7 @@ pub fn main() !void {
             input[i] = 0; // initialize all fields to zero.
         }
         // read user input
-        const input_reader = stdin.reader();
+        const input_reader = stdin.deprecatedReader();
         _ = try input_reader.readUntilDelimiterOrEof(input, '\n');
         std.debug.print("{s}\n", .{input});
     }

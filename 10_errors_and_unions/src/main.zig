@@ -64,7 +64,7 @@ pub fn main() !void {
 }
 
 fn print_name() !i32 {
-    try stdout.print("My name is Pedro!", .{});
+    std.log.debug("My name is Pedro!", .{});
     return 1;
 }
 

@@ -114,10 +114,12 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&run_lib_unit_tests.step);
     test_step.dependOn(&run_exe_unit_tests.step);
 
-    const exe_hello = b.addExecutable(.{
-        .name = "hello",
+    const exe_hello_mod = b.createModule(.{
         .root_source_file = b.path("src/hello.zig"),
         .target = target,
+        .optimize = optimize,
     });
+
+    const exe_hello = b.addExecutable(.{ .name = "hello", .root_module = exe_hello_mod });
     b.installArtifact(exe_hello);
 }

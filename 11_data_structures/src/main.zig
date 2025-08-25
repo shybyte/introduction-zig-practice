@@ -12,14 +12,14 @@ pub fn main() !void {
     {
         var buffer = try std.ArrayList(u8)
             .initCapacity(allocator, 100);
-        defer buffer.deinit();
+        defer buffer.deinit(allocator);
 
-        try buffer.append('H');
-        try buffer.append('e');
-        try buffer.append('l');
-        try buffer.append('l');
-        try buffer.append('o');
-        try buffer.appendSlice(" World!");
+        try buffer.append(allocator, 'H');
+        try buffer.append(allocator, 'e');
+        try buffer.append(allocator, 'l');
+        try buffer.append(allocator, 'l');
+        try buffer.append(allocator, 'o');
+        try buffer.appendSlice(allocator, " World!");
 
         std.log.debug("arrayList: {s}", .{buffer.items});
 
@@ -29,9 +29,9 @@ pub fn main() !void {
         const removed2 = buffer.swapRemove(1); // Faster!
         std.log.debug("removed '{c}' arrayList: {s}", .{ removed2, buffer.items });
 
-        try buffer.appendSlice(" Next");
-        try buffer.insert(4, '?');
-        try buffer.insertSlice(2, " insertedSlice ");
+        try buffer.appendSlice(allocator, " Next");
+        try buffer.insert(allocator, 4, '?');
+        try buffer.insertSlice(allocator, 2, " insertedSlice ");
         std.log.debug("arrayList: {s}", .{buffer.items});
     }
 
@@ -115,7 +115,7 @@ pub fn main() !void {
         try people.append(allocator, .{ .name = "Michael", .age = 64, .height = 1.87 });
 
         for (people.items(.name), people.items(.age)) |*name, *age| {
-            try stdout.print("{s} has age: {d}\n", .{ name.*, age.* });
+            std.log.debug("{s} has age: {d}\n", .{ name.*, age.* });
         }
 
         var slice = people.slice();
@@ -123,7 +123,7 @@ pub fn main() !void {
             age.* += 10;
         }
         for (slice.items(.name), slice.items(.age)) |*n, *a| {
-            try stdout.print("Name: {s}, Age: {d}\n", .{ n.*, a.* });
+            std.log.debug("Name: {s}, Age: {d}\n", .{ n.*, a.* });
         }
     }
 }

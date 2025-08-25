@@ -7,15 +7,15 @@ const stdout = std.io.getStdOut().writer();
 
 pub fn main() !void {
     const socket = try SocketConf.Socket.init();
-    try stdout.print("Server Addr: {any}\n", .{socket._address});
+    std.log.debug("Server Addr: {any}\n", .{socket._address});
     var server = try socket._address.listen(.{});
     const connection = try server.accept();
     var buffer: [1000]u8 = .{0} ** 1000;
     _ = try Request.read_request(connection, buffer[0..buffer.len]);
-    try stdout.print("{s}\n", .{buffer});
+    std.log.debug("{s}\n", .{buffer});
 
     const request = Request.parse_request(buffer[0..buffer.len]);
-    try stdout.print("{any}\n", .{request});
+    std.log.debug("{any}\n", .{request});
 
     if (request.method == Method.GET) {
         if (std.mem.eql(u8, request.uri, "/")) {

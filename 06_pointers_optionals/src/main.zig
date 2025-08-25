@@ -3,14 +3,8 @@
 //! is to delete this file and start with root.zig instead.
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("Run `zig build test` to run the tests\n", .{});
+    std.log.debug("Run `zig build test` to run the tests\n", .{});
 
     {
         const number: u8 = 5;
@@ -42,20 +36,20 @@ pub fn main() !void {
         const c1: u8 = 5;
         const c2: u8 = 6;
         var pointer = &c1;
-        try stdout.print("{d}\n", .{pointer.*});
+        std.log.debug("{d}\n", .{pointer.*});
         pointer = &c2;
-        try stdout.print("{d}\n", .{pointer.*});
+        std.log.debug("{d}\n", .{pointer.*});
     }
 
     // 6.3 Pointer arithmetic
     {
         const ar = [_]i32{ 1, 2, 3, 4 };
         var ptr: [*]const i32 = &ar;
-        try stdout.print("{d}\n", .{ptr[0]});
+        std.log.debug("{d}\n", .{ptr[0]});
         ptr += 1;
-        try stdout.print("{d}\n", .{ptr[0]});
+        std.log.debug("{d}\n", .{ptr[0]});
         ptr += 1;
-        try stdout.print("{d}\n", .{ptr[0]});
+        std.log.debug("{d}\n", .{ptr[0]});
 
         const sl = ar[0..ar.len];
         _ = sl;
@@ -89,12 +83,12 @@ pub fn main() !void {
     {
         const num: ?i32 = 5;
         if (num) |not_null_num| {
-            try stdout.print("Optional has a value: {d}\n", .{not_null_num});
+            std.log.debug("Optional has a value: {d}\n", .{not_null_num});
         }
 
         const x: ?i32 = null;
         const dbl = (x orelse 15) * 2;
-        try stdout.print("{d}\n", .{dbl});
+        std.log.debug("{d}\n", .{dbl});
 
         std.log.debug("{}\n", .{unwrap(23)});
 

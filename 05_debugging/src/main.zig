@@ -3,26 +3,20 @@
 //! is to delete this file and start with root.zig instead.
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("Run `zig build test` to run the tests\n", .{});
+    std.log.debug("Run `zig build test` to run the tests\n", .{});
 
     const result = add(34, 16);
-    try stdout.print("Result: {d}\n", .{result});
+    std.log.debug("Result: {d}\n", .{result});
 
-    const stderr = std.io.getStdErr().writer();
+    const stderr = std.fs.File.stderr().deprecatedWriter();
     try stderr.print("Result: {d}\n", .{result});
 
     // 5.3 How to investigate the data type of your objects
     {
         const number: i32 = 5;
         try expect(@TypeOf(number) == i32);
-        try stdout.print("{any}\n", .{@TypeOf(number)});
+        std.log.debug("{any}\n", .{@TypeOf(number)});
     }
 }
 

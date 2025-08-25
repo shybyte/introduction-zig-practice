@@ -10,5 +10,5 @@ fn add_and_increment(a: u8, b: u8) u8 {
 pub fn main() !void {
     var n = add_and_increment(2, 3);
     n = add_and_increment(n, n);
-    try stdout.print("Result: {d}!\n", .{n});
+    std.log.debug("Result: {d}!\n", .{n});
 }

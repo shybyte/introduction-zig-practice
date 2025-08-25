@@ -10,7 +10,7 @@ pub fn main() !void {
 
     // 12.1 Understanding comptime in Zig
     const random_number: u32 = @intCast(@rem(std.time.nanoTimestamp(), 100)); // Generates a random number between 0 and 99
-    try stdout.print("Random number: {}\n", .{random_number});
+    std.log.debug("Random number: {}\n", .{random_number});
 
     // 12.1.1 Applying over a function argument
     {

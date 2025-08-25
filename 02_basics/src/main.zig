@@ -6,11 +6,7 @@ pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
 
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("Run `zig build test` to run the tests\n", .{});
+    std.log.debug("Run `zig build test` to run the tests\n", .{});
 
     // 2.1.2 Switch statements
     {
@@ -28,7 +24,7 @@ pub fn main() !void {
                 area = "Sales";
             },
         }
-        try stdout.print("{s}\n", .{area});
+        std.log.debug("{s}\n", .{area});
 
         // 2.1.2.2 The else branch and assignment
         {
@@ -41,7 +37,7 @@ pub fn main() !void {
                 },
                 // else => unreachable,
             };
-            try stdout.print("{s}\n", .{category});
+            std.log.debug("{s}\n", .{category});
         }
 
         // 2.1.2.3 Using ranges in switch
@@ -56,21 +52,21 @@ pub fn main() !void {
                     @panic("Not supported level!");
                 },
             };
-            try stdout.print("{s}\n", .{category});
+            std.log.debug("{s}\n", .{category});
         }
 
         // 2.1.2.4 Labeled switch statements
         {
             xsw: switch (@as(u8, 1)) {
                 1 => {
-                    try stdout.print("First branch\n", .{});
+                    std.log.debug("First branch\n", .{});
                     continue :xsw 2;
                 },
                 2 => continue :xsw 3,
                 3 => break :xsw, // alternatively "return" to return from function
                 4 => {},
                 else => {
-                    try stdout.print("Unmatched case, value: {d}\n", .{@as(u8, 1)});
+                    std.log.debug("Unmatched case, value: {d}\n", .{@as(u8, 1)});
                 },
             }
         }
@@ -89,21 +85,21 @@ pub fn main() !void {
     {
         const name = [_]u8{ 'P', 'e', 'd', 'r', 'o' };
         for (name) |char| {
-            try stdout.print("{d} | ", .{char});
+            std.log.debug("{d} | ", .{char});
         }
-        try stdout.print("\n", .{});
+        std.log.debug("\n", .{});
 
         for (name, 0..) |char, i| {
-            try stdout.print("{d}:{d} | ", .{ char, i });
+            std.log.debug("{d}:{d} | ", .{ char, i });
         }
-        try stdout.print("\n", .{});
+        std.log.debug("\n", .{});
     }
 
     // 2.1.6 While loops
     {
         var i: u8 = 1;
         while (i < 5) {
-            try stdout.print("{d} | ", .{i});
+            std.log.debug("{d} | ", .{i});
             i += 1;
         }
         std.log.debug("\ni at end of loop: {} \n", .{i});
@@ -113,7 +109,7 @@ pub fn main() !void {
             if (i > 3) {
                 continue;
             }
-            try stdout.print("{d} | ", .{i});
+            std.log.debug("{d} | ", .{i});
         }
         std.log.debug("\ni at end of loop: {}", .{i});
     }
@@ -128,16 +124,16 @@ pub fn main() !void {
             i += 1;
         }
         try std.testing.expect(i == 10);
-        try stdout.print("Everything worked!\n", .{});
+        std.log.debug("Everything worked!\n", .{});
 
         const ns = [_]u8{ 1, 2, 3, 4, 5, 6 };
         for (ns) |j| {
             if ((j % 2) == 0) {
                 continue;
             }
-            try stdout.print("{d} | ", .{j});
+            std.log.debug("{d} | ", .{j});
         }
-        try stdout.print("\n", .{});
+        std.log.debug("\n", .{});
     }
 
     // 2.2 Function parameters are immutable

@@ -1,5 +1,4 @@
 const std = @import("std");
-const stdout = std.io.getStdOut().writer();
 const Thread = std.Thread;
 const Pool = std.Thread.Pool;
 const Mutex = std.Thread.Mutex;
@@ -35,7 +34,7 @@ pub fn main() !void {
         const thr2 = try Thread.spawn(.{}, increment, .{});
         thr1.join();
         thr2.join();
-        try stdout.print("Couter value: {d}\n", .{counter});
+        std.log.debug("Couter value: {d}\n", .{counter});
     }
 
     // 16.6.4 Using mutexes in Zig
@@ -45,7 +44,7 @@ pub fn main() !void {
         const thr2 = try Thread.spawn(.{}, incrementWithMutex, .{&mutex});
         thr1.join();
         thr2.join();
-        try stdout.print("Couter value: {d}\n", .{counter_with_mutex});
+        std.log.debug("Couter value: {d}\n", .{counter_with_mutex});
     }
 
     // 16.7.2 Using read/write locks in Zig
@@ -66,7 +65,7 @@ pub fn main() !void {
     {
         std.log.debug("\nCancelling or killing a particular thread...", .{});
         const thread = try Thread.spawn(.{}, work, .{});
-        std.time.sleep(500 * std.time.ns_per_ms);
+        std.Thread.sleep(500 * std.time.ns_per_ms);
 
         std.log.debug("Stopping thread", .{});
         running.store(false, .monotonic);
@@ -78,9 +77,9 @@ pub fn main() !void {
 }
 
 fn print_id_pool(id: *const u8) void {
-    _ = stdout.print("Starting the work Thread ID: {d}\n", .{id.*}) catch void;
-    std.time.sleep(1000 * std.time.ns_per_ms);
-    _ = stdout.print("Finishing the work {d}.\n", .{id.*}) catch void;
+    std.log.debug("Starting the work Thread ID: {d}\n", .{id.*});
+    std.Thread.sleep(1000 * std.time.ns_per_ms);
+    std.log.debug("Finishing the work {d}.\n", .{id.*});
 }
 
 var counter: usize = 0;
@@ -109,9 +108,9 @@ fn reader(lock: *RwLock) !void {
     for (0..3) |_| {
         lock.lockShared();
         const v: u32 = counter_rw;
-        try stdout.print("{d}", .{v});
+        std.log.debug("{d}", .{v});
         lock.unlockShared();
-        std.time.sleep(10 * std.time.ns_per_ms);
+        std.Thread.sleep(10 * std.time.ns_per_ms);
     }
 }
 
@@ -120,7 +119,7 @@ fn writer(lock: *RwLock) void {
         lock.lock();
         counter_rw += 1;
         lock.unlock();
-        std.time.sleep(10 * std.time.ns_per_ms);
+        std.Thread.sleep(10 * std.time.ns_per_ms);
     }
 }
 
@@ -131,7 +130,7 @@ var counter_cancel: u64 = 0;
 fn do_more_work() void {
     std.log.debug("Do more work {}", .{counter_cancel});
     counter_cancel += 10;
-    std.time.sleep(100 * std.time.ns_per_ms);
+    std.Thread.sleep(100 * std.time.ns_per_ms);
     std.log.debug("Increased counter to  {}", .{counter_cancel});
 }
 
@@ -159,10 +158,10 @@ fn basicStuff() !void {
         const thread1 = try Thread.spawn(.{}, print_id, .{&id1});
         const thread2 = try Thread.spawn(.{}, print_id, .{&id2});
 
-        _ = try stdout.write("Joining thread 1\n");
+        std.log.debug("Joining thread 1\n");
         thread1.join();
-        std.time.sleep(1 * std.time.ns_per_s);
-        _ = try stdout.write("Joining thread 2\n");
+        std.Thread.sleep(1 * std.time.ns_per_s);
+        std.log.debug("Joining thread 2\n");
         thread2.join();
     }
 
@@ -171,18 +170,18 @@ fn basicStuff() !void {
         const id1: u8 = 10;
         const thread1 = try Thread.spawn(.{}, print_id, .{&id1});
         thread1.detach();
-        // std.time.sleep(100 * std.time.ns_per_ms);
+        // std.Thread.sleep(100 * std.time.ns_per_ms);
     }
 }
 
 fn do_some_work() !void {
-    _ = try stdout.write("Starting the work.\n");
-    std.time.sleep(100 * std.time.ns_per_ms);
-    _ = try stdout.write("Finishing the work.\n");
+    std.log.debug("Starting the work.\n");
+    std.Thread.sleep(100 * std.time.ns_per_ms);
+    std.log.debug("Finishing the work.\n");
 }
 
 fn print_id(id: *const u8) !void {
-    _ = try stdout.print("Starting the work Thread ID: {d}\n", .{id.*});
-    std.time.sleep(1000 * std.time.ns_per_ms);
-    _ = try stdout.print("Finishing the work {d}.\n", .{id.*});
+    _ = std.log.debug("Starting the work Thread ID: {d}\n", .{id.*});
+    std.Thread.sleep(1000 * std.time.ns_per_ms);
+    _ = std.log.debug("Finishing the work {d}.\n", .{id.*});
 }

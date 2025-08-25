@@ -2,7 +2,8 @@ const std = @import("std");
 const Connection = std.net.Server.Connection;
 
 pub fn read_request(conn: Connection, buffer: []u8) !void {
-    const reader = conn.stream.reader();
+    var stream_buffer: [1024]u8 = undefined;
+    const reader = conn.stream.reader(&stream_buffer).getStream();
     _ = try reader.read(buffer);
 }
 

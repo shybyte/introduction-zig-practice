@@ -6,14 +6,7 @@ pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
 
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
-
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
+    std.log.debug("Run `zig build test` to run the tests.\n", .{});
 
     // 1.4.2 Declaring without an initial value
     var age: u8 = undefined;
@@ -27,13 +20,13 @@ pub fn main() !void {
 
         // 1.6 Arrays
         const ns = [4]u8{ 48, 24, 12, 6 };
-        try stdout.print("Array element: {d}\n", .{ns[2]});
+        std.log.debug("Array element: {d}\n", .{ns[2]});
 
         const ls = [_]f64{ 432.1, 87.2, 900.05 };
         _ = ls;
 
         const slice = ns[1..3];
-        try stdout.print("slice length: {d}\n", .{slice.len});
+        std.log.debug("slice length: {d}\n", .{slice.len});
 
         const slice_util_end = ns[1..ns.len];
         _ = slice_util_end;
@@ -46,13 +39,13 @@ pub fn main() !void {
         const a = [_]u8{ 1, 2, 3 };
         const b = [_]u8{ 4, 5 };
         const c = a ++ b;
-        try stdout.print("{any}\n", .{c});
+        std.log.debug("{any}\n", .{c});
     }
 
     {
         const a = [_]u8{ 1, 2, 3 };
         const c = a ** 2;
-        try stdout.print("{any}\n", .{c});
+        std.log.debug("{any}\n", .{c});
     }
 
     // 1.6.4 Runtime versus compile-time known length in slices
@@ -72,32 +65,30 @@ pub fn main() !void {
             break :add_one y; // returns y from the block, needs label
         };
         if (x == 124 and y == 124) {
-            try stdout.print("Hey!\n", .{});
+            std.log.debug("Hey!\n", .{});
         }
     }
 
     // 1.8 How strings work in Zig?
     {
         const string_object = "This is an example of string literal in Zig";
-        try stdout.print("{d}\n", .{string_object.len});
-        try stdout.print("{any}\n", .{@TypeOf("A literal value")});
+        std.log.debug("{d}\n", .{string_object.len});
+        std.log.debug("{any}\n", .{@TypeOf("A literal value")});
 
         {
-            try stdout.print("Bytes that represents the string object: ", .{});
+            std.log.debug("Bytes that represents the string object: ", .{});
             for (string_object) |byte| {
-                try stdout.print("{X} ", .{byte});
+                std.log.debug("{X} ", .{byte});
             }
-            try stdout.print("\n", .{});
+            std.log.debug("\n", .{});
         }
 
         const str: []const u8 = "A string value";
-        try stdout.print("{any}\n", .{@TypeOf(str)});
+        std.log.debug("{any}\n", .{@TypeOf(str)});
 
         const bytes = [_]u8{ 0x48, 0x65, 0x6C, 0x6C, 0x6F };
-        try stdout.print("{s}\n", .{bytes});
+        std.log.debug("{s}\n", .{bytes});
     }
-
-    try bw.flush(); // Don't forget to flush!
 
     // 1.8.3 A better look at the object type
     {
@@ -112,17 +103,17 @@ pub fn main() !void {
     // 1.8.4 Byte vs unicode points
     {
         const string_object = "Ⱥ";
-        _ = try stdout.write("Bytes that represents the string object: ");
+        std.log.debug("Bytes that represents the string object: ", .{});
         for (string_object) |char| {
-            try stdout.print("{X} ", .{char});
+            std.log.debug("{X} ", .{char});
         }
 
         var utf8 = try std.unicode.Utf8View.init("アメリカ");
         var iterator = utf8.iterator();
         while (iterator.nextCodepointSlice()) |codepoint| {
-            try stdout.print(
-                "got codepoint {}\n",
-                .{std.fmt.fmtSliceHexUpper(codepoint)},
+            std.log.debug(
+                "got codepoint {any}\n",
+                .{codepoint},
             );
         }
     }
@@ -130,10 +121,8 @@ pub fn main() !void {
     // 1.8.5 Some useful functions for strings
     {
         const name: []const u8 = "Pedro";
-        try stdout.print("{any}\n", .{std.mem.eql(u8, name, "Pedro")});
+        std.log.debug("{any}\n", .{std.mem.eql(u8, name, "Pedro")});
     }
-
-    try bw.flush(); // Don't forget to flush!
 }
 
 test "simple test" {

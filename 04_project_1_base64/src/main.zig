@@ -3,17 +3,11 @@
 //! is to delete this file and start with root.zig instead.
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("Run `zig build test` to run the tests\n", .{});
+    std.log.debug("Run `zig build test` to run the tests\n", .{});
 
     const base64 = Base64.init();
-    try stdout.print("Character at index 28: {c}\n", .{base64._char_at(28)});
+    std.log.debug("Character at index 28: {c}\n", .{base64._char_at(28)});
 
     var memory_buffer: [1000]u8 = undefined;
     var fba = std.heap.FixedBufferAllocator.init(&memory_buffer);
@@ -23,8 +17,8 @@ pub fn main() !void {
     const etext = "VGVzdGluZyBzb21lIG1vcmUgc3R1ZmY=";
     const encoded_text = try base64.encode(allocator, text);
     const decoded_text = try base64.decode(allocator, etext);
-    try stdout.print("Encoded text: {s}\n", .{encoded_text});
-    try stdout.print("Decoded text: {s}\n", .{decoded_text});
+    std.log.debug("Encoded text: {s}\n", .{encoded_text});
+    std.log.debug("Decoded text: {s}\n", .{decoded_text});
 }
 
 const Base64 = struct {

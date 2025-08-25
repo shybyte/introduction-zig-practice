@@ -1,7 +1,7 @@
 const std = @import("std");
 
-const stdin = std.io.getStdIn().reader();
-const stdout = std.io.getStdOut().writer();
+const stdin = std.fs.File.stdin().deprecatedWriter();
+const stdout = std.fs.File.stdin().deprecatedWriter();
 
 pub fn main() !void {
     std.log.debug("Hello", .{});
@@ -15,14 +15,17 @@ pub fn main() !void {
     {
         var file = try std.fs.cwd().openFile("src/main.zig", .{});
         defer file.close();
-        var buffered = std.io.bufferedReader(file.reader());
-        var bufreader = buffered.reader();
 
         var buffer: [1000]u8 = undefined;
-        @memset(buffer[0..], 0);
+        var buffered = file.reader(&buffer);
 
-        _ = try bufreader.readUntilDelimiterOrEof(buffer[0..], '\n');
-        try stdout.print("{s}\n", .{buffer});
+        var buffer2: [40]u8 = undefined;
+        @memset(buffer2[0..], 0);
+
+        _ = try buffered.interface.adaptToOldInterface().readUntilDelimiter(&buffer2, '\n');
+        // _ = try buffered.read(buffer2[0..10]);
+        // _ = try bufreader.readSliceAll('\n');
+        std.log.debug("Read src/main.zig: {s}\n", .{buffer2});
     }
 
     // 13.7.2 Creating new directories
@@ -39,15 +42,15 @@ pub fn main() !void {
         const file = try output_dir.createFile("output.txt", .{ .read = true });
         defer file.close();
 
-        var fw = file.writer();
+        var fw = file.deprecatedWriter();
         _ = try fw.writeAll("We are going to read this line\n");
 
         var buffer: [300]u8 = undefined;
         @memset(buffer[0..], 0);
         try file.seekTo(0);
-        var fr = file.reader();
+        var fr = file.deprecatedReader();
         _ = try fr.readAll(buffer[0..]);
-        try stdout.print("{s}\n", .{buffer});
+        std.log.debug("{s}\n", .{buffer});
     }
 
     // 13.5.2 Opening files and appending data to it
@@ -55,7 +58,7 @@ pub fn main() !void {
         const file = try output_dir.openFile("output.txt", .{ .mode = .write_only });
         defer file.close();
         try file.seekFromEnd(0);
-        var fw = file.writer();
+        var fw = file.deprecatedWriter();
         _ = try fw.writeAll("Some random text to write\n");
     }
 
@@ -79,7 +82,7 @@ pub fn main() !void {
         const dir = try cwd.openDir(".", .{ .iterate = true });
         var it = dir.iterate(); // walk for recursive
         while (try it.next()) |entry| {
-            try stdout.print("File name: {s}\n", .{entry.name});
+            std.log.debug("File name: {s}\n", .{entry.name});
         }
     }
 }
@@ -88,7 +91,7 @@ fn echoInput() !void {
     var buffer: [20]u8 = undefined;
     @memset(buffer[0..], 0);
     _ = try stdin.readUntilDelimiterOrEof(buffer[0..], '\n');
-    try stdout.print("Your name is: {s}\n", .{buffer});
+    std.log.debug("Your name is: {s}\n", .{buffer});
 }
 
 const expect = std.testing.expect;
