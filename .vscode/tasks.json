@@ -252,6 +252,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/14_c"
             }
+        },
+        {
+            "label": "Run Chapter 15 Project 4 - Developing an image filter",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/15_project_4_image_filter"
+            }
         }
     ]
 }
