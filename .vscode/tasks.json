@@ -270,6 +270,24 @@
             "options": {
                 "cwd": "${workspaceFolder}/15_project_4_image_filter"
             }
+        },
+        {
+            "label": "Run Chapter 16 Threads",
+            "type": "shell",
+            "command": "zig",
+            "args": [
+                "build",
+                "run"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the Zig program defined in main.zig",
+            "options": {
+                "cwd": "${workspaceFolder}/16_threads"
+            }
         }
     ]
 }
